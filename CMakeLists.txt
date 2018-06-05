@@ -64,8 +64,9 @@ endif()
 
 ##############################################
 
-# add_subdirectory(examples)
-# add_subdirectory(benchmark)
+add_subdirectory(examples)
+add_subdirectory(benchmark)
+add_subdirectory(ncnnsfd)
 add_subdirectory(src)
 if(NOT ANDROID AND NOT IOS)
 add_subdirectory(tools)

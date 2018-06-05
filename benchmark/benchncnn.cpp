@@ -254,6 +254,54 @@ void mobilenet_ssd_run(const ncnn::Net& net)
     ex.extract("detection_out", out);
 }
 
+void nvisoa2_init(ncnn::Net& net)
+{
+    net.load_param("NVISO-A2.param");
+}
+
+void nvisoa2_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(640, 640, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("detection_out", out);
+}
+
+void nvisoa6_init(ncnn::Net& net)
+{
+    net.load_param("NVISO-A6.param");
+}
+
+void nvisoa6_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(640, 640, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("detection_out", out);
+}
+
+void nvisoa7_init(ncnn::Net& net)
+{
+    net.load_param("NVISO-A7.param");
+}
+
+void nvisoa7_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(320, 320, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("detection_out", out);
+}
+
 int main(int argc, char** argv)
 {
     int loop_count = 4;
@@ -285,6 +333,11 @@ int main(int argc, char** argv)
     fprintf(stderr, "powersave = %d\n", ncnn::get_cpu_powersave());
 
     // run
+
+    benchmark("NVISO-A2", nvisoa2_init, nvisoa2_run);
+    benchmark("NVISO-A6", nvisoa6_init, nvisoa6_run);
+    benchmark("NVISO-A7", nvisoa7_init, nvisoa7_run);
+
     benchmark("squeezenet", squeezenet_init, squeezenet_run);
 
     benchmark("mobilenet", mobilenet_init, mobilenet_run);
