@@ -8,7 +8,7 @@ ncnn is a high-performance neural network inference computing framework optimize
 ### Compile
 [how to build ncnn library](https://github.com/Tencent/ncnn/wiki/how-to-build)
 
-[how to use ncnn with alexnet](https://github.com/Tencent/ncnn/wiki/how-to-use-ncnn-with-alexnet)
+[how to use ncnn with alexnet, and how to convert caffe model to ncnn model](https://github.com/Tencent/ncnn/wiki/how-to-use-ncnn-with-alexnet)
 
 ### How To Test SFD 
 
