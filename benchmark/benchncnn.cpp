@@ -286,9 +286,11 @@ void nvisoa6_run(const ncnn::Net& net)
     ex.extract("detection_out", out);
 }
 
+// 1
+
 void nvisoa7_init(ncnn::Net& net)
 {
-    net.load_param("NVISO-A7.param");
+    net.load_param("nvisoa7_dummy.param");
 }
 
 void nvisoa7_run(const ncnn::Net& net)
@@ -300,6 +302,94 @@ void nvisoa7_run(const ncnn::Net& net)
 
     ncnn::Mat out;
     ex.extract("detection_out", out);
+}
+
+// 2
+
+void resnet50_dummy_init(ncnn::Net& net)
+{
+    net.load_param("resnet50_dummy.param");
+}
+
+void resnet50_dummy_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(224, 224, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("fc1000", out);
+}
+
+// 3
+
+void mobilenet_dummy_init(ncnn::Net& net)
+{
+    net.load_param("mobilenet_dummy.param");
+}
+
+void mobilenet_dummy_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(224, 224, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("fc7", out);
+}
+
+// 4
+void mobilefacenet_org_init(ncnn::Net& net)
+{
+    net.load_param("mobilefacenet_org.param");
+}
+
+void mobilefacenet_org_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(96, 112, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("fc5", out);
+}
+// 4
+
+void sphereface06_dummy_init(ncnn::Net& net)
+{
+    net.load_param("sphereface06_dummy.param");
+}
+
+void sphereface06_dummy_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(96, 112, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("scale5", out);
+}
+
+// 5
+
+void sphereface20_dummy_init(ncnn::Net& net)
+{
+    net.load_param("sphereface20_dummy.param");
+}
+
+void sphereface20_dummy_run(const ncnn::Net& net)
+{
+    ncnn::Extractor ex = net.create_extractor();
+
+    ncnn::Mat in(96, 112, 3);
+    ex.input("data", in);
+
+    ncnn::Mat out;
+    ex.extract("fc5", out);
 }
 
 int main(int argc, char** argv)
@@ -333,7 +423,15 @@ int main(int argc, char** argv)
     fprintf(stderr, "powersave = %d\n", ncnn::get_cpu_powersave());
 
     // run
+	
+	benchmark("NVISO-A7(SSD MobileNetV1)", nvisoa7_init, nvisoa7_run);
+	benchmark("MobileNet", mobilenet_dummy_init, mobilenet_dummy_run);
+	benchmark("MobileFaceNet", mobilefacenet_org_init, mobilefacenet_org_run);	
+	benchmark("Sphereface06", sphereface06_dummy_init, sphereface06_dummy_run);
+	benchmark("Sphereface20", sphereface20_dummy_init, sphereface20_dummy_run);
+	benchmark("Resnet50", resnet50_dummy_init, resnet50_dummy_run);
 
+    /*
     benchmark("NVISO-A2", nvisoa2_init, nvisoa2_run);
     benchmark("NVISO-A6", nvisoa6_init, nvisoa6_run);
     benchmark("NVISO-A7", nvisoa7_init, nvisoa7_run);
@@ -357,6 +455,7 @@ int main(int argc, char** argv)
     benchmark("squeezenet-ssd", squeezenet_ssd_init, squeezenet_ssd_run);
 
     benchmark("mobilenet-ssd", mobilenet_ssd_init, mobilenet_ssd_run);
+    */
 
     return 0;
 }
